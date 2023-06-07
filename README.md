@@ -8,7 +8,10 @@ To develop a deep neural network for Malaria infected cell recognition and to an
 Aims to create an algorithm that can detect malaria-infected cells in blood samples using deep learning techniques. The goal is to develop a model that can accurately identify infected cells and distinguish them from healthy ones. The performance of the model will be evaluated based on its accuracy, precision, recall, and F1 score. This problem statement is important because it can help improve the diagnosis of malaria and reduce the time and cost associated with manual diagnosis.
 
 Malaria dataset of 27,558 cell images with an equal number of parasitized and uninfected cells. A level-set based algorithm was applied to detect and segment the red blood cells. The images were collected and annotated by medical professionals.Here we build a convolutional neural network model that is able to classify the cells.
-![193736032-b5847f1f-f002-4edc-912a-eaf48444f1b0](https://github.com/sithihajara/malaria-cell-recognition/assets/94219582/243bbd86-55b9-48a3-a4ae-ce79ed4c42cc)
+
+
+![193736032-b5847f1f-f002-4edc-912a-eaf48444f1b0](https://github.com/sithihajara/malaria-cell-recognition/assets/94219582/c7c65d90-08fd-4947-9475-05978d3effb1)
+
 
 ## Neural Network Model
 ![image](https://github.com/sithihajara/malaria-cell-recognition/assets/94219582/a89197cf-5889-40a2-82dd-84227727d3e1)
