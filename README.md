@@ -64,34 +64,22 @@ sess = tf.compat.v1.Session(config=config)
 set_session(sess)
 
 %matplotlib inline
-
 my_data_dir = 'dataset/cell_images'
-
 os.listdir(my_data_dir)
-
 test_path = my_data_dir+'/test/'
 train_path = my_data_dir+'/train/'
-
 os.listdir(train_path)
-
 len(os.listdir(train_path+'/uninfected/'))
-
 len(os.listdir(train_path+'/parasitized/'))
-
-os.listdir(train_path+'/parasitized')[560]
-
+os.listdir(train_path+'/parasitized')[5604]
 para_img= imread(train_path+
                  '/parasitized/'+
-                 os.listdir(train_path+'/parasitized')[560])
-                
+                 os.listdir(train_path+'/parasitized')[5604])
 plt.imshow(para_img)
-
 uninfe_img= imread(train_path+
                  '/uninfected/'+
-                 os.listdir(train_path+'/uninfected')[560])
-                
+                 os.listdir(train_path+'/uninfected')[5604])
 plt.imshow(uninfe_img)
-
 # Checking the image dimensions
 dim1 = []
 dim2 = []
@@ -100,13 +88,9 @@ for image_filename in os.listdir(test_path+'/uninfected'):
     d1,d2,colors = img.shape
     dim1.append(d1)
     dim2.append(d2)
-
 sns.jointplot(x=dim1,y=dim2)
-
 image_shape = (130,130,3)
-
 model = models.Sequential()
-
 model.add(layers.Conv2D(filters=64, kernel_size=(3,3),input_shape=image_shape, activation='relu',))
 model.add(layers.MaxPooling2D(pool_size=(2, 2)))
 
@@ -119,14 +103,9 @@ model.add(layers.MaxPooling2D(pool_size=(2, 2)))
 
 model.add(layers.Flatten())
 
-
 model.add(layers.Dense(128))
 model.add(layers.Activation('relu'))
 model.add(layers.Dropout(0.5))
-
-model.add(layers.Dense(256))
-model.add(layers.Activation('relu'))
-
 
 
 model.add(layers.Dense(64))
@@ -138,11 +117,8 @@ model.add(layers.Activation('sigmoid'))
 model.compile(loss='binary_crossentropy',
               optimizer='adam',
               metrics=['accuracy'])
-
-
-model.summary()
-
-image_gen = ImageDataGenerator(rotation_range=40, # rotate the image 20 degrees
+ model.summary()
+ image_gen = ImageDataGenerator(rotation_range=20, # rotate the image 20 degrees
                                width_shift_range=0.10, # Shift the pic width by a max of 5%
                                height_shift_range=0.10, # Shift the pic height by a max of 5%
                                rescale=1/255, # Rescale the image by normalzing it.
@@ -151,51 +127,33 @@ image_gen = ImageDataGenerator(rotation_range=40, # rotate the image 20 degrees
                                horizontal_flip=True, # Allo horizontal flipping
                                fill_mode='nearest' # Fill in missing pixels with the nearest filled value
                               )
-batch_size = 16
-
-train_image_gen = image_gen.flow_from_directory(train_path,
+  batch_size = 16
+  train_image_gen = image_gen.flow_from_directory(train_path,
                                                target_size=image_shape[:2],
                                                 color_mode='rgb',
                                                batch_size=batch_size,
                                                class_mode='binary')
-
-len(train_image_gen.classes)
-
-test_image_gen = image_gen.flow_from_directory(test_path,
+  len(train_image_gen.classes)
+  test_image_gen = image_gen.flow_from_directory(test_path,
                                                target_size=image_shape[:2],
                                                color_mode='rgb',
                                                batch_size=batch_size,
                                                class_mode='binary',shuffle=False)
-            
-train_image_gen.class_indices
-
-results = model.fit(train_image_gen,epochs=4,
+ train_image_gen.class_indices
+ results = model.fit(train_image_gen,epochs=4,
                               validation_data=test_image_gen
                              )
-
-plot = pd.DataFrame(model.history.history)
-
-plot.head
-
-plot[['loss','val_loss']].plot()
-
-plot[['accuracy','val_accuracy']].plot()
-
-model.evaluate(test_image_gen)
-
-pred_probabilities = model.predict(test_image_gen)
-
-test_image_gen.classes
-
-predictions = pred_probabilities > 0.5
-
+ losses = pd.DataFrame(model.history.history)
+ losses[['loss','val_loss']].plot()
+ model.evaluate(test_image_gen)
+ pred_probabilities = model.predict(test_image_gen)
+ test_image_gen.classes
+ predictions = pred_probabilities > 0.5
 print(classification_report(test_image_gen.classes,predictions))
-
 confusion_matrix(test_image_gen.classes,predictions)
-
 import random
 import tensorflow as tf
-list_dir=["uninfected","parasitized"]
+list_dir=["uninfected"]
 dir_=(random.choice(list_dir))
 para_img= imread(train_path+
                  '/'+dir_+'/'+
@@ -209,32 +167,20 @@ plt.axis("off")
 plt.imshow(img)
 plt.show()
 
-import random
-import tensorflow as tf
-# list_dir=["uninfected","parasitized"]
-# dir_=(random.choice(list_dir))
-# para_img= imread(train_path+
-#                  '/'+dir_+'/'+
-#                  os.listdir(train_path+'/'+dir_)[random.randint(0,100)])
-para_img = imread('Rajeshkannan- uninfected.png')
-plt.imshow(para_img)
-
 ```
 
 ## OUTPUT
 
 ### Training Loss, Validation Loss Vs Iteration Plot
-![1](https://github.com/sithihajara/malaria-cell-recognition/assets/94219582/0b18f0df-db14-47b7-a879-d02b57b21d60)
-![2](https://github.com/sithihajara/malaria-cell-recognition/assets/94219582/9cbba61a-4135-432b-bfd5-b2dc1dd25227)
+![243562030-b2d492d2-b2f8-4c0b-832c-8c9b033d4975](https://github.com/sithihajara/malaria-cell-recognition/assets/94219582/0238992c-25b0-4258-88d5-c2459f5f8d95)
 
 ### Classification Report
-![classrep](https://github.com/sithihajara/malaria-cell-recognition/assets/94219582/a0fe6827-53a0-4099-b387-cac7e13fddcd)
+![243563760-a45cd961-7475-4095-9c6f-6f2ce59c5d18](https://github.com/sithihajara/malaria-cell-recognition/assets/94219582/753bb1fb-c700-44a8-b761-6e9c64f23edc)
 
 ### Confusion Matrix
-![conf_mat](https://github.com/sithihajara/malaria-cell-recognition/assets/94219582/8fe5aae5-6644-4dd7-893e-5fc3971c6079)
+![243561972-47f1e68a-6ca6-452d-b808-831969947968](https://github.com/sithihajara/malaria-cell-recognition/assets/94219582/10739287-0882-4842-92ee-3684783edc60)
 
 ### New Sample Data Prediction
-![image](https://github.com/sithihajara/malaria-cell-recognition/assets/94219582/4617a940-952a-4b87-ba17-21757f8767a2)
 
 ## RESULT
 Thus, a deep neural network for Malaria infected cell recognition is developed and the performance is analyzed.
