@@ -181,6 +181,6 @@ plt.show()
 ![243561972-47f1e68a-6ca6-452d-b808-831969947968](https://github.com/sithihajara/malaria-cell-recognition/assets/94219582/10739287-0882-4842-92ee-3684783edc60)
 
 ### New Sample Data Prediction
-
+https://github.com/sithihajara/malaria-cell-recognition/edit/main/README.md
 ## RESULT
 Thus, a deep neural network for Malaria infected cell recognition is developed and the performance is analyzed.
